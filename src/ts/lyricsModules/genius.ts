@@ -36,10 +36,21 @@ function parseAlt(dom: Document): string {
     for (const element of classes) {
         try {
             if (element.className.includes("Lyrics__Container-sc-")) {
+
+                // Remove header
+                if (element.innerHTML.includes("LyricsHeader__Container-sc")) {
+                    const header = element.querySelector("[class^='LyricsHeader__Container-sc']");
+                    if (header) {
+                        element.removeChild(header);
+                    }
+                }
+
                 // Convert <br> explicitly, otherwise it will just
                 // get consumed later without adding a new line.
+                
                 lyrics += element.innerHTML.replaceAll("<br>", "\n");
             }
+            
         }
         catch {
             continue;
